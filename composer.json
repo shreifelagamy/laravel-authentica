@@ -1,0 +1,68 @@
+{
+    "name": "shreifelagamy/laravel-authentica",
+    "description": "Laravel client, facade and notification channel for Authentica: SMS, and one-time codes by SMS, WhatsApp or email.",
+    "keywords": [
+        "laravel",
+        "authentica",
+        "sms",
+        "otp",
+        "whatsapp",
+        "notifications",
+        "saudi arabia"
+    ],
+    "homepage": "https://github.com/shreifelagamy/laravel-authentica",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shreif Ashraf",
+            "homepage": "https://github.com/shreifelagamy"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/contracts": "^11.0|^12.0|^13.0",
+        "illuminate/http": "^11.0|^12.0|^13.0",
+        "illuminate/notifications": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "propaganistas/laravel-phone": "^6.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.18",
+        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0|^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Shreifelagamy\\Authentica\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Shreifelagamy\\Authentica\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "lint": "pint",
+        "analyse": "phpstan analyse"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Shreifelagamy\\Authentica\\AuthenticaServiceProvider"
+            ],
+            "aliases": {
+                "Authentica": "Shreifelagamy\\Authentica\\Facades\\Authentica"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
