@@ -2,6 +2,7 @@
 
 namespace Shreifelagamy\Authentica;
 
+use SensitiveParameter;
 use Shreifelagamy\Authentica\Contracts\Authentica as AuthenticaContract;
 use Shreifelagamy\Authentica\Enums\OtpMethod;
 use Shreifelagamy\Authentica\Exceptions\AuthenticaRequestRejectedException;
@@ -19,18 +20,18 @@ class Authentica implements AuthenticaContract
         private readonly PayloadBuilder $payloads,
     ) {}
 
-    public function sendSms(string $phone, string $message, ?string $sender = null): ApiResponse
+    public function sendSms(#[SensitiveParameter] string $phone, string $message, ?string $sender = null): ApiResponse
     {
         return $this->transport->post('/send-sms', $this->payloads->sms($phone, $message, $sender));
     }
 
     public function sendOtp(
-        string $recipient,
-        ?string $code = null,
+        #[SensitiveParameter] string $recipient,
+        #[SensitiveParameter] ?string $code = null,
         OtpMethod|string|null $method = null,
         int|string|null $template = null,
-        ?string $fallbackPhone = null,
-        ?string $fallbackEmail = null,
+        #[SensitiveParameter] ?string $fallbackPhone = null,
+        #[SensitiveParameter] ?string $fallbackEmail = null,
     ): ApiResponse {
         return $this->transport->post(
             '/send-otp',
@@ -38,7 +39,7 @@ class Authentica implements AuthenticaContract
         );
     }
 
-    public function verifyOtp(string $recipient, string $code): bool
+    public function verifyOtp(#[SensitiveParameter] string $recipient, #[SensitiveParameter] string $code): bool
     {
         try {
             return $this->transport->post('/verify-otp', $this->payloads->verify($recipient, $code))->successful();

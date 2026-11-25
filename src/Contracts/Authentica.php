@@ -2,6 +2,7 @@
 
 namespace Shreifelagamy\Authentica\Contracts;
 
+use SensitiveParameter;
 use Shreifelagamy\Authentica\Enums\OtpMethod;
 use Shreifelagamy\Authentica\Exceptions\AuthenticaException;
 use Shreifelagamy\Authentica\Http\ApiResponse;
@@ -16,7 +17,7 @@ interface Authentica
      *
      * @throws AuthenticaException
      */
-    public function sendSms(string $phone, string $message, ?string $sender = null): ApiResponse;
+    public function sendSms(#[SensitiveParameter] string $phone, string $message, ?string $sender = null): ApiResponse;
 
     /**
      * Sends a one-time code by SMS, WhatsApp or email. Pass $code to send your own code (digits only); leave it
@@ -27,12 +28,12 @@ interface Authentica
      * @throws AuthenticaException
      */
     public function sendOtp(
-        string $recipient,
-        ?string $code = null,
+        #[SensitiveParameter] string $recipient,
+        #[SensitiveParameter] ?string $code = null,
         OtpMethod|string|null $method = null,
         int|string|null $template = null,
-        ?string $fallbackPhone = null,
-        ?string $fallbackEmail = null,
+        #[SensitiveParameter] ?string $fallbackPhone = null,
+        #[SensitiveParameter] ?string $fallbackEmail = null,
     ): ApiResponse;
 
     /**
@@ -42,7 +43,7 @@ interface Authentica
      *
      * @throws AuthenticaException for anything other than a wrong or expired code
      */
-    public function verifyOtp(string $recipient, string $code): bool;
+    public function verifyOtp(#[SensitiveParameter] string $recipient, #[SensitiveParameter] string $code): bool;
 
     /**
      * The credits left on the account.

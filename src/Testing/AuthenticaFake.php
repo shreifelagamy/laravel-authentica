@@ -5,6 +5,7 @@ namespace Shreifelagamy\Authentica\Testing;
 use Closure;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Assert as PHPUnit;
+use SensitiveParameter;
 use Shreifelagamy\Authentica\Contracts\Authentica;
 use Shreifelagamy\Authentica\Enums\OtpMethod;
 use Shreifelagamy\Authentica\Http\ApiResponse;
@@ -30,7 +31,7 @@ class AuthenticaFake implements Authentica
         private int $balance = 100,
     ) {}
 
-    public function sendSms(string $phone, string $message, ?string $sender = null): ApiResponse
+    public function sendSms(#[SensitiveParameter] string $phone, string $message, ?string $sender = null): ApiResponse
     {
         $this->sent[] = SentMessage::sms($this->payloads->sms($phone, $message, $sender));
 
@@ -38,12 +39,12 @@ class AuthenticaFake implements Authentica
     }
 
     public function sendOtp(
-        string $recipient,
-        ?string $code = null,
+        #[SensitiveParameter] string $recipient,
+        #[SensitiveParameter] ?string $code = null,
         OtpMethod|string|null $method = null,
         int|string|null $template = null,
-        ?string $fallbackPhone = null,
-        ?string $fallbackEmail = null,
+        #[SensitiveParameter] ?string $fallbackPhone = null,
+        #[SensitiveParameter] ?string $fallbackEmail = null,
     ): ApiResponse {
         $message = SentMessage::otp($this->payloads->otp($recipient, $code, $method, $template, $fallbackPhone, $fallbackEmail));
 
@@ -57,7 +58,7 @@ class AuthenticaFake implements Authentica
      * True when the code matches the last code sent to the recipient ("000000" when Authentica would have made
      * it), unless verifyUsing() says otherwise.
      */
-    public function verifyOtp(string $recipient, string $code): bool
+    public function verifyOtp(#[SensitiveParameter] string $recipient, #[SensitiveParameter] string $code): bool
     {
         $payload = $this->payloads->verify($recipient, $code);
         $recipient = $payload['phone'] ?? $payload['email'] ?? $recipient;

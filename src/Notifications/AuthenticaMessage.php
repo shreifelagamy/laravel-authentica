@@ -2,6 +2,7 @@
 
 namespace Shreifelagamy\Authentica\Notifications;
 
+use SensitiveParameter;
 use Shreifelagamy\Authentica\Enums\OtpMethod;
 
 /**
@@ -40,7 +41,7 @@ class AuthenticaMessage
     /**
      * A one-time code. Leave $code empty to let Authentica create it.
      */
-    public static function otp(?string $code = null): static
+    public static function otp(#[SensitiveParameter] ?string $code = null): static
     {
         return new static(self::TYPE_OTP, code: $code);
     }
@@ -96,7 +97,7 @@ class AuthenticaMessage
     /**
      * Sends to this phone number (or email address) instead of the notifiable's own.
      */
-    public function to(string $recipient): static
+    public function to(#[SensitiveParameter] string $recipient): static
     {
         $this->to = $recipient;
 

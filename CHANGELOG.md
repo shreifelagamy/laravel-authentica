@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.1 - 2026-11-25
+
+- Phone numbers, email addresses and one-time codes are marked `#[SensitiveParameter]`, so PHP leaves them out of stack traces (failed jobs, error trackers, logs).
+
 ## v0.1.0 - 2026-11-25
 
 - Client and `Authentica` facade: `sendSms()`, `sendOtp()` (SMS, WhatsApp or email, with your own code or Authentica's), `verifyOtp()` and `balance()`.

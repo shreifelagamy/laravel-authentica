@@ -63,3 +63,18 @@ it('never retries a failed send', function () {
 
     Http::assertSentCount(1);
 });
+
+it('keeps codes and phone numbers out of stack traces', function () {
+    fakeAuthentica([API.'/send-otp' => Http::response(['errors' => [['message' => 'Down']]], 503)]);
+
+    try {
+        Authentica::sendOtp('0551234567', '482913');
+    } catch (AuthenticaUnavailableException $exception) {
+        expect($exception->getTraceAsString())->not->toContain('482913')->not->toContain('551234567')
+            ->and((string) $exception)->not->toContain('482913')->not->toContain('551234567');
+
+        return;
+    }
+
+    $this->fail('No exception was thrown.');
+});

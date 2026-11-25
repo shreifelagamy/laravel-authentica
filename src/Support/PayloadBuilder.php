@@ -3,6 +3,7 @@
 namespace Shreifelagamy\Authentica\Support;
 
 use InvalidArgumentException;
+use SensitiveParameter;
 use Shreifelagamy\Authentica\Enums\OtpMethod;
 use Shreifelagamy\Authentica\Exceptions\AuthenticaInvalidPhoneException;
 
@@ -24,7 +25,7 @@ final class PayloadBuilder
      *
      * @throws AuthenticaInvalidPhoneException
      */
-    public function sms(string $phone, string $message, ?string $sender = null): array
+    public function sms(#[SensitiveParameter] string $phone, string $message, ?string $sender = null): array
     {
         if (trim($message) === '') {
             throw new InvalidArgumentException('An Authentica SMS needs a message.');
@@ -43,12 +44,12 @@ final class PayloadBuilder
      * @throws AuthenticaInvalidPhoneException
      */
     public function otp(
-        string $recipient,
-        ?string $code = null,
+        #[SensitiveParameter] string $recipient,
+        #[SensitiveParameter] ?string $code = null,
         OtpMethod|string|null $method = null,
         int|string|null $template = null,
-        ?string $fallbackPhone = null,
-        ?string $fallbackEmail = null,
+        #[SensitiveParameter] ?string $fallbackPhone = null,
+        #[SensitiveParameter] ?string $fallbackEmail = null,
     ): array {
         $method = $this->method($method);
 
@@ -71,7 +72,7 @@ final class PayloadBuilder
      *
      * @throws AuthenticaInvalidPhoneException
      */
-    public function verify(string $recipient, string $code): array
+    public function verify(#[SensitiveParameter] string $recipient, #[SensitiveParameter] string $code): array
     {
         $method = str_contains($recipient, '@') ? OtpMethod::Email : OtpMethod::Sms;
 
@@ -95,14 +96,14 @@ final class PayloadBuilder
     /**
      * @return array{phone: string}|array{email: string}
      */
-    private function recipient(string $recipient, OtpMethod $method): array
+    private function recipient(#[SensitiveParameter] string $recipient, OtpMethod $method): array
     {
         return $method->usesPhone()
             ? ['phone' => $this->phones->normalize($recipient)]
             : ['email' => $this->email($recipient)];
     }
 
-    private function email(string $email): string
+    private function email(#[SensitiveParameter] string $email): string
     {
         $email = trim($email);
 

@@ -3,6 +3,7 @@
 namespace Shreifelagamy\Authentica\Support;
 
 use Propaganistas\LaravelPhone\PhoneNumber;
+use SensitiveParameter;
 use Shreifelagamy\Authentica\Exceptions\AuthenticaInvalidPhoneException;
 
 /**
@@ -23,7 +24,7 @@ final class PhoneNumberNormalizer
     /**
      * @throws AuthenticaInvalidPhoneException
      */
-    public function normalize(string $phone): string
+    public function normalize(#[SensitiveParameter] string $phone): string
     {
         $cleaned = $this->clean($phone);
         $number = new PhoneNumber($cleaned, $this->countries);
@@ -35,7 +36,7 @@ final class PhoneNumberNormalizer
         return $number->formatE164();
     }
 
-    public function isValid(string $phone): bool
+    public function isValid(#[SensitiveParameter] string $phone): bool
     {
         try {
             $this->normalize($phone);
@@ -54,7 +55,7 @@ final class PhoneNumberNormalizer
         return $this->countries;
     }
 
-    private function clean(string $phone): string
+    private function clean(#[SensitiveParameter] string $phone): string
     {
         $phone = str_replace(self::ARABIC_DIGITS, self::LATIN_DIGITS, trim($phone));
         $phone = (string) preg_replace('/[\s\-().\x{200E}\x{200F}]/u', '', $phone);
