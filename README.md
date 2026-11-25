@@ -10,7 +10,7 @@ Send SMS messages and one-time codes (by SMS, WhatsApp or email) through [Authen
 - Typed exceptions, with phone numbers masked in their messages
 - `Authentica::fake()` with assertions for your tests
 
-Requires PHP 8.2+ and Laravel 11, 12 or 13.
+Requires PHP 8.2+ and Laravel 12 or 13.
 
 ## Installation
 
