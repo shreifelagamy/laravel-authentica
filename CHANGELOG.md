@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.2 - 2026-11-26
+
+- A [Laravel Boost](https://laravel.com/docs/boost) guideline and an `authentica-development` skill in `resources/boost/`, installed into apps with `php artisan boost:install`.
+- `AGENTS.md` for coding agents working on the package.
+
 ## v0.1.1 - 2026-11-25
 
 - Phone numbers, email addresses and one-time codes are marked `#[SensitiveParameter]`, so PHP leaves them out of stack traces (failed jobs, error trackers, logs).

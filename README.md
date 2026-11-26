@@ -202,6 +202,16 @@ composer analyse
 composer lint
 ```
 
+## AI agents
+
+The package ships a [Laravel Boost](https://laravel.com/docs/boost) guideline and an `authentica-development` skill, so coding agents know how to use it. After installing the package, run:
+
+```bash
+php artisan boost:install
+```
+
+Without Boost, copy `vendor/shreifelagamy/laravel-authentica/resources/boost/skills/authentica-development` into your app's `.claude/skills/` folder by hand.
+
 ## License
 
 MIT. See [LICENSE.md](LICENSE.md).
